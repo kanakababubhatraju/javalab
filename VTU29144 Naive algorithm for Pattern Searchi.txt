@@ -1,0 +1,45 @@
+Naive algorithm for Pattern Searching
+https://www.geeksforgeeks.org/dsa/naive-algorithm-for-pattern-searching/
+Program:-
+import java.util.*;
+
+public class GFG {
+
+    public static void main(String[] args) {
+        String text = "aabaacaadaabaaba";
+        String pattern = "aaba";
+
+        ArrayList<Integer> result = search(pattern, text);
+
+        for (int index : result) {
+            System.out.print(index + " ");
+        }
+    }
+
+    public static ArrayList<Integer> search(String pattern, String text) {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        int n = text.length();
+        int m = pattern.length();
+
+        // Naive Pattern Searching
+        for (int i = 0; i <= n - m; i++) {
+            int j;
+
+            for (j = 0; j < m; j++) {
+                if (text.charAt(i + j) != pattern.charAt(j)) {
+                    break;
+                }
+            }
+
+            // Pattern found
+            if (j == m) {
+                result.add(i);
+            }
+        }
+
+        return result;
+    }
+}
+Output:-
+0 9 12 
