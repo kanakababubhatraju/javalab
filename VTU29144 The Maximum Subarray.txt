@@ -1,0 +1,80 @@
+The Maximum Subarray
+https://www.hackerrank.com/challenges/maxsubarray/problem
+Program:-
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static int[] maxSubarray(List<Integer> arr) {
+
+        // Maximum subarray sum - Kadane's Algorithm
+        int currentSum = arr.get(0);
+        int maxSubarray = arr.get(0);
+
+        // Maximum subsequence sum
+        int maxSubsequence = 0;
+        int largestNegative = arr.get(0);
+        boolean hasPositive = false;
+
+        for (int i = 0; i < arr.size(); i++) {
+            int value = arr.get(i);
+
+            // Kadane's algorithm
+            if (i > 0) {
+                currentSum = Math.max(value, currentSum + value);
+                maxSubarray = Math.max(maxSubarray, currentSum);
+            }
+
+            // Subsequence
+            if (value > 0) {
+                maxSubsequence += value;
+                hasPositive = true;
+            }
+
+            // Largest element (needed if all are negative)
+            largestNegative = Math.max(largestNegative, value);
+        }
+
+        if (!hasPositive) {
+            maxSubsequence = largestNegative;
+        }
+
+        return new int[] { maxSubarray, maxSubsequence };
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            int n = sc.nextInt();
+
+            List<Integer> arr = new ArrayList<Integer>();
+
+            for (int i = 0; i < n; i++) {
+                arr.add(sc.nextInt());
+            }
+
+            int[] result = maxSubarray(arr);
+
+            System.out.println(result[0] + " " + result[1]);
+        }
+
+        sc.close();
+    }
+}
+Output:-
+Input (stdin)
+2
+4
+1 2 3 4
+6
+2 -1 2 3 4 -5
+Your Output (stdout)
+10 10
+10 11
+Expected Output
+10 10
+10 11
